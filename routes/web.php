@@ -39,6 +39,12 @@ Route::get('/reserver', function () {
 Route::get('/nouvellereservation', [ReservationController::class, 'index'])->name('newresa');
 Route::post('/reserver', [ReservationController::class, 'create'])->name('reserver');
 
+Route::get('/authentification', function () {
+    return view('auth.authentification');
+});
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
