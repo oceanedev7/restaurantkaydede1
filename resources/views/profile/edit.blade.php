@@ -1,9 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
+            {{ __('Mon Profil') }}
         </h2>
     </x-slot>
+
+    <a class="underline ml-10 relative top-6 font-black" href="{{route ('dashboard')}}" > <- Revenir à la page d'accueil </a>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

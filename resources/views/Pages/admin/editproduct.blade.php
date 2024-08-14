@@ -15,30 +15,31 @@
     
     <div> Modifier un produit</div>
 
-    <form class="" enctype="multipart/form-data"  method="post" action="{{route ('updateProduit', $produit->id)}}">
-        @csrf
-        <select name="type" required>
-            <option value="">---</option>
-            <option value="Pizza" {{ $produit->type == 'Pizza' ? 'selected' : '' }}>Pizza</option>
-            <option value="Dessert" {{ $produit->type == 'Dessert' ? 'selected' : '' }}>Dessert</option>
-            <option value="Boisson" {{ $produit->type == 'Boisson' ? 'selected' : '' }}>Boisson</option>
-        </select>
+        <form enctype="multipart/form-data" method="post" action="{{ route('updateProduit', $produit->id) }}">
+            @csrf
+            <select name="type" required>
+                <option value="">---</option>
+                <option value="Pizza" {{ $produit->type == 'Pizza' ? 'selected' : '' }}>Pizza</option>
+                <option value="Dessert" {{ $produit->type == 'Dessert' ? 'selected' : '' }}>Dessert</option>
+                <option value="Boisson" {{ $produit->type == 'Boisson' ? 'selected' : '' }}>Boisson</option>
+            </select>
+            
+            <div>
+                <img src="{{ Storage::url($produit->photo) }}" alt="Image actuelle" class="h-20 w-20">
+            </div>
         
-        <input    value="{{$produit->photo}}" class="" aria-describedby="user_avatar_help" name="photo" type="file"  accept="image/*" required/>
         
-        <input  value="{{$produit->nom}}" placeholder="Nom" name="nom" class="" required/>
-        
-        <input value="{{$produit->ingredients}}" placeholder="Ingrédients" name="ingredients" class="" required/>
-        
-        <textarea placeholder="Description" name="description" class="" required>{{$produit->description}}</textarea>
-        
-        <input value="{{$produit->taille}}" placeholder="Taille" name="taille" class=""/>
-        
-        <input value="{{$produit->prix}}" placeholder="Prix" name="prix" class="" required/>
-        
-        <button> Modifier </button>
-        
+            <input class="" aria-describedby="user_avatar_help" name="photo" type="file" accept="image/*"/>
+            
+            <input value="{{ $produit->nom }}" placeholder="Nom" name="nom" class="" required/>
+            <input value="{{ $produit->ingredients }}" placeholder="Ingrédients" name="ingredients" class="" required/>
+            <textarea placeholder="Description" name="description" class="" required>{{ $produit->description }}</textarea>
+            <input value="{{ $produit->taille }}" placeholder="Taille" name="taille" class=""/>
+            <input value="{{ $produit->prix }}" placeholder="Prix" name="prix" class="" required/>
+            
+            <button>Modifier</button>
         </form>
+        
     
 </body>
 </html>

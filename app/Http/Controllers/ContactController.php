@@ -14,7 +14,7 @@ class ContactController extends Controller
     public function index()
     {
         $contact = Contact::all();
-            return view('pages.admin.demandecontact', ['contacts' => $contact]);
+            return view('pages.admin.demandedecontact', ['contacts' => $contact]);
     }
 
     /**
@@ -73,6 +73,9 @@ class ContactController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete  = Contact::findOrFail($id);
+        $delete->delete();
+
+        return redirect("/demandecontact");
     }
 }

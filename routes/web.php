@@ -51,7 +51,8 @@ Route::post('/createproduct', [AddProductController::class, 'create'])->name('aj
 Route::get('/deleteproduct/{id}', [AddProductController::class, 'destroy'])->name('supprimerProduit');
 Route::get('/editproduct/{id}', [AddProductController::class, 'edit'])->name('editProduit');
 Route::post('/updateproduct/{id}', [AddProductController::class, 'update'])->name('updateProduit');
-Route::get('/demandecontact', [ContactController::class, 'index']);
+Route::get('/demandecontact', [ContactController::class, 'index'])->name('afficherContact');
+Route::get('/deletecontact/{id}', [ContactController::class, 'destroy'])->name('supprimerContact');
 
 });
 

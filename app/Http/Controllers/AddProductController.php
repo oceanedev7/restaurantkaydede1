@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Produit;
 
@@ -12,8 +12,18 @@ class AddProductController extends Controller
      */
     public function index()
     {
-        $produits = Produit::all();
-        return view('pages.admin.addproduct', compact('produits'));
+
+        $pizzas = Produit::where('type', 'pizza')->get();
+        $desserts = Produit::where('type', 'dessert')->get();
+        $boissons = Produit::where('type', 'boisson')->get();
+       
+
+        return view('pages.admin.addproduct', [
+            'pizzas' => $pizzas,
+            'desserts' => $desserts,
+            'boissons' => $boissons,
+        ]);
+
     }
 
     /**
@@ -21,13 +31,14 @@ class AddProductController extends Controller
      */
     public function create(Request $request)
     {
+        // dd($request);
         $validatedData = $request->validate([
             'type' => 'required|string',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'nom' => 'required|string',
             'ingredients' => 'required|string',
             'description' => 'required|string',
-            'taille' => 'string', 
+            'taille' => 'nullable|string', 
             'prix' => 'required|numeric',
         ]);
     
@@ -41,28 +52,6 @@ class AddProductController extends Controller
         
         return redirect()->back();     
 
-        // Produit::create($request->all());
-
-        // $request->validate([
-        //     'type' => 'required|string',
-        //     'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-        //     'nom' => 'required|string',
-        //     'ingredients' => 'required|string',
-        //     'description' => 'required|string',
-        //     'taille' => 'string',
-        //     'prix' => 'required|numeric',
-        // ]);
-    
-        //     // dd('2', $request);
-
-        // if ($request->hasFile('photo')) {
-        //     $path = $request->file('photo')->store('public/images');
-        //     $photoPath = Storage::url($path);
-            
-        
-        // }
-
-        //      return redirect()->back()->with('photoPath', $photoPath);
     }
 
     /**
@@ -96,24 +85,39 @@ class AddProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request);
-        $validatedData =  $request->validate(
-            [
-            'type' => 'required|string',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'nom' => 'required|string',
-            'ingredients' => 'required|string',
-            'description' => 'required|string',
-            'taille' => 'string',
-            'prix' => 'required|numeric',
-            ]);         
+          
+    $request->validate([
+        'type' => 'required|string',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg', 
+        'nom' => 'required|string',
+        'ingredients' => 'required|string',
+        'description' => 'required|string',
+        'taille' => 'nullable|string', 
+        'prix' => 'required|numeric',
+    ]);
 
-            $update=Produit::findOrFail($id);  
-            $update->update($validatedData);
-    
-            return redirect("/addproduct");
+    $produit = Produit::findOrFail($id);
+  
+    if ($request->hasFile('photo')) {
+
+        $path = $request->file('photo')->store('public/images');
+        $produit->photo = $path;
     }
 
+    $produit->type = $request->input('type');
+    $produit->nom = $request->input('nom');
+    $produit->ingredients = $request->input('ingredients');
+    $produit->description = $request->input('description');
+    $produit->taille = $request->input('taille');
+    $produit->prix = $request->input('prix');
+
+    $produit->save();
+
+        return redirect('/addproduct');
+    }
+    
+    
+   
     /**
      * Remove the specified resource from storage.
      */
