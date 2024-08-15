@@ -19,12 +19,10 @@ class Role
         if (Auth::check()) {
             if (Auth::user()->role === $role) {
                 return $next($request); 
-            } else {
-                return redirect('/'); 
             }
+               return redirect()->route('accueil');
         }
-
-        return redirect('/');
+         return redirect()->route('accueil');
     }
 }
 

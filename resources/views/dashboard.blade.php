@@ -50,7 +50,7 @@
             <img class="object-cover" src="{{ Storage::url('images/clients.jpg') }}" alt="">
         </div>
         <div class="p-6 w-full">
-            <a href="{{ route('newresa') }}" class="block w-full rounded-lg py-2 px-4 text-center text-white font-bold bg-marron"> 
+            <a href="{{ route('afficherClients') }}" class="block w-full rounded-lg py-2 px-4 text-center text-white font-bold bg-marron"> 
               Voir la liste des clients 
             </a>
           </div>

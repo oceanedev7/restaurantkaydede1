@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Role;
 use App\Http\Controllers\AddProductController;
+use App\Http\Controllers\ListClientController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductViewController;
 use App\Http\Controllers\ReservationController;
@@ -53,7 +54,7 @@ Route::get('/editproduct/{id}', [AddProductController::class, 'edit'])->name('ed
 Route::post('/updateproduct/{id}', [AddProductController::class, 'update'])->name('updateProduit');
 Route::get('/demandecontact', [ContactController::class, 'index'])->name('afficherContact');
 Route::get('/deletecontact/{id}', [ContactController::class, 'destroy'])->name('supprimerContact');
-
+Route::get('/listeclients', [ListClientController::class, 'index'])->name('afficherClients');
 });
 
 Route::middleware(['role:user'])->group(function () {
