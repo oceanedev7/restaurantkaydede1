@@ -50,13 +50,15 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
-        
-        // Vérifier si l'utilisateur est administrateur
-        if ($user->is_admin) {
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->route('accueil');
-        }
+    Auth::login($user);
+
+    if ($user->role === 'user') {
+        return redirect()->route('commande');
+    } elseif ($user->role === 'admin') {
+        return redirect()->route('dashboard');
     }
+
+    return redirect()->route('accueil');
+
+}
 }

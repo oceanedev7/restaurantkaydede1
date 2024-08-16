@@ -52,7 +52,6 @@
         <div class="relative flex">
             <img class="rounded-lg w-[700px]" src="{{ Storage::url('images/farine.jpeg') }}" alt="">
     
-            <!-- Le carré marron superposé à droite de l'image -->
             <div class="bg-beige z-10 w-[500px] h-96 rounded-lg absolute right-[-150px] flex justify-center items-center">
                 J
             </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Role;
 use App\Http\Controllers\AddProductController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ListClientController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductViewController;
@@ -27,17 +28,14 @@ Route::post('/demandedecontact', [ContactController::class, 'create'])->name('co
 
 Route::get('/reserver', function () {
     return view('pages.user.reserver');
-})->name('reserver');
+})->name('reserverView');
 
 Route::post('/reserver', [ReservationController::class, 'create'])->name('reserver');
 
 Route::get('/authentification', function () {
     return view('auth.authentification');
-});
+})->name('authentification');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,7 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['role:admin'])->group(function () {
+Route::middleware([ 'role:admin'])->group(function () {
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/nouvellereservation', [ReservationController::class, 'index'])->name('newresa');
 Route::get('/addproduct', [AddProductController::class, 'index'])->name('afficherProduit');
 Route::post('/createproduct', [AddProductController::class, 'create'])->name('ajouterProduit');
@@ -57,8 +58,9 @@ Route::get('/deletecontact/{id}', [ContactController::class, 'destroy'])->name('
 Route::get('/listeclients', [ListClientController::class, 'index'])->name('afficherClients');
 });
 
-Route::middleware(['role:user'])->group(function () {
-    //
+Route::middleware([ 'role:user'])->group(function () {
+Route::get('/commanderenligne', [CommandeController::class, 'index'])->name('commande');
+
 });
 
 require __DIR__.'/auth.php';

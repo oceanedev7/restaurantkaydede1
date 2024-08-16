@@ -16,13 +16,11 @@ class Role
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (Auth::check()) {
-            if (Auth::user()->role === $role) {
-                return $next($request); 
-            }
-               return redirect()->route('accueil');
+        if (Auth::check() && Auth::user()->role === $role) {
+            return $next($request);
         }
-         return redirect()->route('accueil');
+
+        return redirect()->route('accueil');
     }
 }
 
