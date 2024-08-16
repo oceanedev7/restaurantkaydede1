@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware([ 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -58,7 +58,7 @@ Route::get('/deletecontact/{id}', [ContactController::class, 'destroy'])->name('
 Route::get('/listeclients', [ListClientController::class, 'index'])->name('afficherClients');
 });
 
-Route::middleware([ 'role:user'])->group(function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
 Route::get('/commanderenligne', [CommandeController::class, 'index'])->name('commande');
 
 });
